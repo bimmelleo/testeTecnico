@@ -7,7 +7,7 @@ public class Main {
         //os métodos de TipoCombService
         TipoCombService service = new TipoCombService();
 
-        //criando os objetos/tipos de combustiveis
+        //criando/adicionando os objetos combustiveis
         service.adicionar(new tipoComb("Gasolina Adtivada", 6.49));
         service.adicionar(new tipoComb("Gasolina Comum", 6.59));
         service.adicionar(new tipoComb("Etanol", 4.99));

@@ -8,10 +8,30 @@ public class abastecer {
     private Date date;
     private double valor;
     private double quant;
+    private static int contagem = 1;
 
     public abastecer (String bomba, Date date, double valor, double quant) {
+
+        if (bomba == null || bomba.isEmpty()) {
+            throw new IllegalArgumentException("Bomba Inválida!");
+        }
+
+        if (date == null) {
+            throw new IllegalArgumentException("Data Inválida!");
+        }
+
+        if (valor <= 0) {
+            throw new IllegalArgumentException("Valor DEVE ser maior que zero!");
+        }
+
+        if (quant <= 0) {
+            throw new IllegalArgumentException("Quantidade abastecida DEVE " +
+                    "ser maior que zero!");
+        }
+
+        this.idAbast = contagem++;
         this.bomba = bomba;
-        this.date = date;
+        this.date = new Date(date.getTime());
         this.valor = valor;
         this.quant = quant;
     }
@@ -20,24 +40,28 @@ public class abastecer {
         return idAbast;
     }
 
-    public void setIdAbast() {
-        this.idAbast = idAbast;
-    }
-
     public String getBomba() {
         return bomba;
     }
 
     public void setBomba(String bomba) {
-        this.bomba = bomba;
+        if (bomba == null || bomba.trim().isEmpty()) {
+        throw new IllegalArgumentException("Bomba Inválida!");
+        } else {
+            this.bomba = bomba;
+        }
     }
 
     public Date getDate() {
-        return date;
+        return new Date(date.getTime());
     }
 
     public void setDate(Date date) {
-        this.date = date;
+        if (date == null) {
+            throw new IllegalArgumentException("Data Inválida!");
+        } else {
+            this.date = new Date(date.getTime());
+        }
     }
 
     public double getValor() {
@@ -45,7 +69,11 @@ public class abastecer {
     }
 
     public void setValor(double valor) {
-        this.valor = valor;
+        if (valor <= 0) {
+            throw new IllegalArgumentException("Valor DEVE ser maior que zero!");
+        } else {
+            this.valor = valor;
+        }
     }
 
     public double getQuant() {
@@ -53,7 +81,12 @@ public class abastecer {
     }
 
     public void setQuant(double quant) {
-        this.quant = quant;
+        if (quant <= 0) {
+            throw new IllegalArgumentException("Quantidade abastecida DEVE " +
+                    "ser maior que zero!");
+        } else {
+            this.quant = quant;
+        }
     }
 
     @Override

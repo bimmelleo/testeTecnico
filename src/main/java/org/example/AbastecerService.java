@@ -25,7 +25,7 @@ public class AbastecerService {
         return null;
     }
 
-    public boolean atualizarBomb(int idAbast, String bomba, String newBomba) {
+    public boolean atualizarBomb(int idAbast, String newBomba) {
         abastecer t = buscar(idAbast);
         if (t != null) {
             t.setBomba(newBomba);
@@ -34,7 +34,7 @@ public class AbastecerService {
         return false;
     }
 
-    public boolean atualizarDate(int idAbast, Date date, Date newDate) {
+    public boolean atualizarDate(int idAbast, Date newDate) {
         abastecer t = buscar(idAbast);
         if (t != null) {
             t.setDate(newDate);
@@ -43,7 +43,7 @@ public class AbastecerService {
         return false;
     }
 
-    public boolean atualizarValor(int idAbast, double valor, double newValor) {
+    public boolean atualizarValor(int idAbast, double newValor) {
         abastecer t = buscar(idAbast);
         if (t != null) {
             t.setValor(newValor);
@@ -52,7 +52,7 @@ public class AbastecerService {
         return false;
     }
 
-    public boolean atualizarQuant(int idAbast, double quant, double newQuant) {
+    public boolean atualizarQuant(int idAbast, double newQuant) {
         abastecer t = buscar(idAbast);
         if (t != null) {
             t.setQuant(newQuant);

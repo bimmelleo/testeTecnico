@@ -1,4 +1,4 @@
-package org.example;
+package model;
 
 import java.util.Date;
 
@@ -8,7 +8,6 @@ public class abastecer {
     private Date date;
     private double valor;
     private double quant;
-    private static int contagem = 1;
 
     public abastecer (String bomba, Date date, double valor, double quant) {
 
@@ -29,7 +28,7 @@ public class abastecer {
                     "ser maior que zero!");
         }
 
-        this.idAbast = contagem++;
+        this.idAbast = idAbast;
         this.bomba = bomba;
         this.date = new Date(date.getTime());
         this.valor = valor;
@@ -38,6 +37,10 @@ public class abastecer {
 
     public int getIdAbast() {
         return idAbast;
+    }
+
+    public void setIdAbast(int idAbast) {
+        this.idAbast = idAbast;
     }
 
     public String getBomba() {

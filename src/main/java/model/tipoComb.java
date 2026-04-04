@@ -1,4 +1,4 @@
-package org.example;
+package model;
 
     //criando a classe padrão para os tipos de combustíveis do posto
 public class tipoComb {

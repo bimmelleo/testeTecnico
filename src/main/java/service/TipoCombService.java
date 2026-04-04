@@ -1,4 +1,6 @@
-package org.example;
+package service;
+
+import model.tipoComb;
 
 import java.util.ArrayList;
 import java.util.List;

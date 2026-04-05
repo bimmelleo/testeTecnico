@@ -1,23 +1,21 @@
 package dao;
 
-import model.abastecer;
+import model.bombaComb;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class abastecerDAO {
+public class bombaCombDAO {
 
     // CREATE
-    public boolean inserir(abastecer a) {
-        String sql = "INSERT INTO abastecimento (bomba, data, valor, quantidade) VALUES (?, ?, ?, ?)";
+    public boolean inserir(bombaComb a) {
+        String sql = "INSERT INTO bombaComb (name, combAbast) VALUES (?, ?)";
 
         try (Connection conn = conexao.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, a.getBomba());
-            stmt.setDate(2, new Date(a.getDate().getTime()));
-            stmt.setDouble(3, a.getValor());
-            stmt.setDouble(4, a.getQuant());
+            stmt.setString(1, a.getName());
+            stmt.setString(2, a.getCombAbast());
 
             return stmt.executeUpdate() > 0;
 
@@ -28,79 +26,62 @@ public class abastecerDAO {
     }
 
     // READ (LISTAR)
-    public List<abastecer> listar() {
-        List<abastecer> lista = new ArrayList<>();
-        String sql = "SELECT * FROM abastecimento";
+    public List<bombaComb> listar() {
+        List<bombaComb> lista = new ArrayList<>();
+        String sql = "SELECT * FROM bombaComb";
 
         try (Connection conn = conexao.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                abastecer a = new abastecer(
-                        rs.getString("bomba"),
-                        rs.getDate("data"),
-                        rs.getDouble("valor"),
-                        rs.getDouble("quantidade")
+                bombaComb a = new bombaComb(
+                        rs.getString("name"),
+                        rs.getString("combAbast")
                 );
-
-                a.setIdAbast(rs.getInt("id"));
-
                 lista.add(a);
             }
-
         } catch (SQLException e) {
             System.out.println("Erro ao listar: " + e.getMessage());
         }
-
         return lista;
     }
 
-    // READ (BUSCAR POR ID)
-    public abastecer buscarPorId(int id) {
-        String sql = "SELECT * FROM abastecimento WHERE id = ?";
+    // READ (BUSCAR POR NAME)
+    public bombaComb buscarPorName(String name) {
+        String sql = "SELECT * FROM bombaComb WHERE name = ?";
 
         try (Connection conn = conexao.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, id);
+            stmt.setString(1, name);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                abastecer a = new abastecer(
-                        rs.getString("bomba"),
-                        rs.getDate("data"),
-                        rs.getDouble("valor"),
-                        rs.getDouble("quantidade")
+                bombaComb a = new bombaComb(
+                        rs.getString("name"),
+                        rs.getString("combAbast")
                 );
-
-                a.setIdAbast(rs.getInt("id"));
-
                 return a;
             }
-
         } catch (SQLException e) {
             System.out.println("Erro ao buscar: " + e.getMessage());
         }
-
         return null;
     }
 
     // UPDATE
-    public boolean atualizar(abastecer a) {
-        String sql = "UPDATE abastecimento SET bomba=?, data=?, valor=?, quantidade=? WHERE id=?";
+    public boolean atualizar(bombaComb a) {
+        String sql = "UPDATE bombaComb SET name=?, combAbast=? WHERE name=?";
 
         try (Connection conn = conexao.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, a.getBomba());
-            stmt.setDate(2, new java.sql.Date(a.getDate().getTime()));
-            stmt.setDouble(3, a.getValor());
-            stmt.setDouble(4, a.getQuant());
-            stmt.setInt(5, a.getIdAbast());
+            stmt.setString(1, a.getName());
+            stmt.setString(2, a.getCombAbast());
+            stmt.setString(3, a.getName());
 
             return stmt.executeUpdate() > 0;
-
         } catch (SQLException e) {
             System.out.println("Erro ao atualizar: " + e.getMessage());
             return false;
@@ -108,16 +89,15 @@ public class abastecerDAO {
     }
 
     // DELETE
-    public boolean deletar(int id) {
-        String sql = "DELETE FROM abastecimento WHERE id = ?";
+    public boolean deletar(String name) {
+        String sql = "DELETE FROM bombaComb WHERE name = ?";
 
         try (Connection conn = conexao.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, id);
+            stmt.setString(1, name);
 
             return stmt.executeUpdate() > 0;
-
         } catch (SQLException e) {
             System.out.println("Erro ao deletar: " + e.getMessage());
             return false;

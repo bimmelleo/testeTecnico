@@ -2,8 +2,6 @@ package service;
 
 import dao.abastecerDAO;
 import model.abastecer;
-
-import java.util.Date;
 import java.util.List;
 
 public class AbastecerService {

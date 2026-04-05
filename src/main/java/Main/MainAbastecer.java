@@ -2,11 +2,10 @@ package Main;
 
 import model.abastecer;
 import service.AbastecerService;
-
 import java.util.Date;
 import java.util.List;
 
-public class Main {
+public class MainAbastecer {
 
     public static void main(String[] args) {
 
@@ -84,7 +83,11 @@ public class Main {
         // =========================
         // 5. DELETE
         // =========================
-
+//        System.out.println("\n=== REMOVENDO ===");
+//
+//        boolean removido = service.remover("Bomba A");
+//
+//        System.out.println(removido ? "Removido!" : "Falha ao remover");
 
         // =========================
         // 6. LISTAR FINAL
@@ -100,5 +103,7 @@ public class Main {
         }
 
         System.out.println("\n=== TESTE FINALIZADO ===");
+
+
     }
 }

@@ -1,46 +1,64 @@
 package service;
 
+import dao.bombaCombDAO;
 import model.bombaComb;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class BombaCombService {
 
-    private List<bombaComb> listaBomb = new ArrayList<>();
+    private bombaCombDAO dao = new bombaCombDAO();
 
-    public void adicionar(bombaComb bomba) {
-        listaBomb.add(bomba);
+    // CREATE
+    public boolean adicionar(bombaComb newBomba) {
+
+        if (newBomba == null) {
+            System.out.println("Objeto inválido");
+            return false;
+        }
+
+        if (newBomba.getName() == null || newBomba.getName().isEmpty()) {
+            System.out.println("Bomba inválida");
+            return false;
+        }
+
+        if (newBomba.getCombAbast() == null || newBomba.getCombAbast().isEmpty()) {
+            System.out.println("Combustível inválido");
+            return false;
+        }
+
+        return dao.inserir(newBomba);
     }
 
+    // READ (listar todos)
     public List<bombaComb> listar() {
-        return listaBomb;
+        return dao.listar();
     }
 
+    // READ (buscar por NAME)
     public bombaComb buscar(String name) {
-        for (bombaComb t : listaBomb) {
-            if (t.getName() != null && t.getName().equalsIgnoreCase(name)) {
-                return t;
-            }
+        if (name == null || name.isEmpty()) {
+            System.out.println("Nome inválido");
+            return null;
         }
-        return null;
+        return dao.buscarPorName(name);
     }
 
-    public boolean atualizar(String name, String newComb) {
-        bombaComb t = buscar(name);
-        if (t != null) {
-            t.setCombAbast(newComb);
-            return true;
+    // UPDATE (geral - recomendado)
+    public boolean atualizar(bombaComb newBomba) {
+
+        if (newBomba == null || newBomba.getName().isEmpty()) {
+            System.out.println("Objeto inválido");
+            return false;
         }
-        return false;
+        return dao.atualizar(newBomba);
     }
 
+    // DELETE
     public boolean remover(String name) {
-        bombaComb t = buscar(name);
-        if (t != null) {
-            listaBomb.remove(t);
-            return true;
+        if (name == null || name.isEmpty()) {
+            System.out.println("Nome inválido");
+            return false;
         }
-        return false;
+        return dao.deletar(name);
     }
 }

@@ -28,7 +28,6 @@ public class abastecer {
                     "ser maior que zero!");
         }
 
-        this.idAbast = idAbast;
         this.bomba = bomba;
         this.date = new Date(date.getTime());
         this.valor = valor;

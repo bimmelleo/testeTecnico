@@ -1,35 +1,35 @@
 package Main;
 
-import model.bombaComb;
-import service.BombaCombService;
+import model.tipoComb;
+import service.TipoCombService;
 import java.util.List;
 
-public class MainBombaComb {
+public class MainTipoComb {
 
     public static void main(String[] args) {
 
-        BombaCombService service = new BombaCombService();
+        TipoCombService service = new TipoCombService();
 
         System.out.println("=== INSERINDO ===");
 
-        bombaComb b1 = new bombaComb("Bomba A", "Gasolina");
-        boolean inserido = service.adicionar(b1);
+        tipoComb t1 = new tipoComb("Gasolina", 5.99);
+        boolean inserido = service.adicionar(t1);
 
         System.out.println(inserido ? "Inserido!" : "Falha ao inserir");
 
 
         System.out.println("\n=== LISTANDO ===");
 
-        List<bombaComb> lista = service.listar();
+        List<tipoComb> lista = service.listar();
 
-        for (bombaComb b : lista) {
-            System.out.println(b);
+        for (tipoComb t : lista) {
+            System.out.println(t);
         }
 
 
         System.out.println("\n=== BUSCANDO ===");
 
-        bombaComb buscado = service.buscar("Bomba A");
+        tipoComb buscado = service.buscar("Gasolina");
 
         if (buscado != null) {
             System.out.println("Encontrado: " + buscado);
@@ -41,7 +41,7 @@ public class MainBombaComb {
         System.out.println("\n=== ATUALIZANDO ===");
 
         if (buscado != null) {
-            buscado.setCombAbast("Etanol");
+            buscado.setPrecoComb(6.49);
 
             boolean atualizado = service.atualizar(buscado);
             System.out.println(atualizado ? "Atualizado!" : "Falha ao atualizar");
@@ -52,14 +52,14 @@ public class MainBombaComb {
 
         lista = service.listar();
 
-        for (bombaComb b : lista) {
-            System.out.println(b);
+        for (tipoComb t : lista) {
+            System.out.println(t);
         }
 
 
 //        System.out.println("\n=== REMOVENDO ===");
 //
-//        boolean removido = service.remover("Bomba A");
+//        boolean removido = service.remover("Gasolina");
 //
 //        System.out.println(removido ? "Removido!" : "Falha ao remover");
 
@@ -68,8 +68,8 @@ public class MainBombaComb {
 
         lista = service.listar();
 
-        for (bombaComb b : lista) {
-            System.out.println(b);
+        for (tipoComb t : lista) {
+            System.out.println(t);
         }
 
         System.out.println("\n=== TESTE FINALIZADO ===");

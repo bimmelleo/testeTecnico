@@ -7,7 +7,7 @@ import java.util.List;
 
 public class bombaCombDAO {
 
-    // CREATE
+
     public boolean inserir(bombaComb a) {
         String sql = "INSERT INTO bombaComb (name, combAbast) VALUES (?, ?)";
 
@@ -25,7 +25,7 @@ public class bombaCombDAO {
         }
     }
 
-    // READ (LISTAR)
+
     public List<bombaComb> listar() {
         List<bombaComb> lista = new ArrayList<>();
         String sql = "SELECT * FROM bombaComb";
@@ -47,7 +47,7 @@ public class bombaCombDAO {
         return lista;
     }
 
-    // READ (BUSCAR POR NAME)
+
     public bombaComb buscarPorName(String name) {
         String sql = "SELECT * FROM bombaComb WHERE name = ?";
 
@@ -70,7 +70,7 @@ public class bombaCombDAO {
         return null;
     }
 
-    // UPDATE
+
     public boolean atualizar(bombaComb a) {
         String sql = "UPDATE bombaComb SET name=?, combAbast=? WHERE name=?";
 
@@ -88,7 +88,7 @@ public class bombaCombDAO {
         }
     }
 
-    // DELETE
+
     public boolean deletar(String name) {
         String sql = "DELETE FROM bombaComb WHERE name = ?";
 

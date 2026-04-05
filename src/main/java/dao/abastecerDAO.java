@@ -27,7 +27,7 @@ public class abastecerDAO {
         }
     }
 
-    // READ (LISTAR)
+
     public List<abastecer> listar() {
         List<abastecer> lista = new ArrayList<>();
         String sql = "SELECT * FROM abastecimento";
@@ -56,7 +56,7 @@ public class abastecerDAO {
         return lista;
     }
 
-    // READ (BUSCAR POR ID)
+
     public abastecer buscarPorId(int id) {
         String sql = "SELECT * FROM abastecimento WHERE id = ?";
 
@@ -86,7 +86,7 @@ public class abastecerDAO {
         return null;
     }
 
-    // UPDATE
+
     public boolean atualizar(abastecer a) {
         String sql = "UPDATE abastecimento SET bomba=?, data=?, valor=?, quantidade=? WHERE id=?";
 
@@ -107,7 +107,7 @@ public class abastecerDAO {
         }
     }
 
-    // DELETE
+
     public boolean deletar(int id) {
         String sql = "DELETE FROM abastecimento WHERE id = ?";
 

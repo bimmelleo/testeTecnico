@@ -8,7 +8,7 @@ public class BombaCombService {
 
     private bombaCombDAO dao = new bombaCombDAO();
 
-    // CREATE
+
     public boolean adicionar(bombaComb newBomba) {
 
         if (newBomba == null) {
@@ -29,12 +29,12 @@ public class BombaCombService {
         return dao.inserir(newBomba);
     }
 
-    // READ (listar todos)
+
     public List<bombaComb> listar() {
         return dao.listar();
     }
 
-    // READ (buscar por NAME)
+
     public bombaComb buscar(String name) {
         if (name == null || name.isEmpty()) {
             System.out.println("Nome inválido");
@@ -43,7 +43,7 @@ public class BombaCombService {
         return dao.buscarPorName(name);
     }
 
-    // UPDATE (geral - recomendado)
+
     public boolean atualizar(bombaComb newBomba) {
 
         if (newBomba == null || newBomba.getName().isEmpty()) {
@@ -53,7 +53,7 @@ public class BombaCombService {
         return dao.atualizar(newBomba);
     }
 
-    // DELETE
+
     public boolean remover(String name) {
         if (name == null || name.isEmpty()) {
             System.out.println("Nome inválido");

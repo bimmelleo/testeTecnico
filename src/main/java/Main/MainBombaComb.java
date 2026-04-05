@@ -10,9 +10,7 @@ public class MainBombaComb {
 
         BombaCombService service = new BombaCombService();
 
-        // =========================
-        // 1. INSERT
-        // =========================
+
         System.out.println("=== INSERINDO ===");
 
         bombaComb b1 = new bombaComb("Bomba A", "Gasolina");
@@ -20,9 +18,7 @@ public class MainBombaComb {
 
         System.out.println(inserido ? "Inserido!" : "Falha ao inserir");
 
-        // =========================
-        // 2. LISTAR
-        // =========================
+
         System.out.println("\n=== LISTANDO ===");
 
         List<bombaComb> lista = service.listar();
@@ -31,9 +27,7 @@ public class MainBombaComb {
             System.out.println(b);
         }
 
-        // =========================
-        // 3. BUSCAR
-        // =========================
+
         System.out.println("\n=== BUSCANDO ===");
 
         bombaComb buscado = service.buscar("Bomba A");
@@ -44,9 +38,7 @@ public class MainBombaComb {
             System.out.println("Não encontrado");
         }
 
-        // =========================
-        // 4. UPDATE
-        // =========================
+
         System.out.println("\n=== ATUALIZANDO ===");
 
         if (buscado != null) {
@@ -56,9 +48,7 @@ public class MainBombaComb {
             System.out.println(atualizado ? "Atualizado!" : "Falha ao atualizar");
         }
 
-        // =========================
-        // 5. LISTAR NOVAMENTE
-        // =========================
+
         System.out.println("\n=== LISTA ATUALIZADA ===");
 
         lista = service.listar();
@@ -67,18 +57,14 @@ public class MainBombaComb {
             System.out.println(b);
         }
 
-        // =========================
-        // 6. DELETE
-        // =========================
+
 //        System.out.println("\n=== REMOVENDO ===");
 //
 //        boolean removido = service.remover("Bomba A");
 //
 //        System.out.println(removido ? "Removido!" : "Falha ao remover");
 
-        // =========================
-        // 7. LISTA FINAL
-        // =========================
+
         System.out.println("\n=== LISTA FINAL ===");
 
         lista = service.listar();

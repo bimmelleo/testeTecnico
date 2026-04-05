@@ -11,9 +11,7 @@ public class MainAbastecer {
 
         AbastecerService service = new AbastecerService();
 
-        // =========================
-        // 1. INSERT
-        // =========================
+
         System.out.println("=== INSERINDO ===");
 
         abastecer novo = new abastecer(
@@ -25,11 +23,9 @@ public class MainAbastecer {
 
         boolean inserido = service.adicionar(novo);
 
-        System.out.println(inserido ? "✔ Inserido com sucesso!" : "Falha ao inserir");
+        System.out.println(inserido ? "Inserido com sucesso!" : "Falha ao inserir");
 
-        // =========================
-        // 2. LISTAR
-        // =========================
+
         System.out.println("\n=== LISTANDO ===");
 
         List<abastecer> lista = service.listar();
@@ -43,14 +39,12 @@ public class MainAbastecer {
             System.out.println("Quantidade: " + a.getQuant());
         }
 
-        // =========================
-        // 3. UPDATE (completo)
-        // =========================
+
         System.out.println("\n=== ATUALIZANDO ===");
 
         if (!lista.isEmpty()) {
 
-            // pega o último inserido (mais seguro que usar ID fixo)
+            //pega o último inserido (mais seguro que usar ID fixo)
             abastecer a = lista.get(lista.size() - 1);
 
             a.setBomba("Bomba 3");
@@ -66,9 +60,7 @@ public class MainAbastecer {
             System.out.println("Nenhum registro para atualizar.");
         }
 
-        // =========================
-        // 4. LISTAR NOVAMENTE
-        // =========================
+
         System.out.println("\n=== LISTANDO APÓS UPDATE ===");
 
         lista = service.listar();
@@ -80,18 +72,14 @@ public class MainAbastecer {
             System.out.println("Valor: " + a.getValor());
         }
 
-        // =========================
-        // 5. DELETE
-        // =========================
+
 //        System.out.println("\n=== REMOVENDO ===");
 //
 //        boolean removido = service.remover("Bomba A");
 //
 //        System.out.println(removido ? "Removido!" : "Falha ao remover");
 
-        // =========================
-        // 6. LISTAR FINAL
-        // =========================
+
         System.out.println("\n=== LISTA FINAL ===");
 
         lista = service.listar();

@@ -8,7 +8,7 @@ public class AbastecerService {
 
     private abastecerDAO dao = new abastecerDAO();
 
-    // CREATE
+
     public boolean adicionar(abastecer abastecimento) {
 
         if (abastecimento == null) {
@@ -39,12 +39,12 @@ public class AbastecerService {
         return dao.inserir(abastecimento);
     }
 
-    // READ (listar todos)
+
     public List<abastecer> listar() {
         return dao.listar();
     }
 
-    // READ (buscar por ID)
+
     public abastecer buscar(int idAbast) {
         if (idAbast <= 0) {
             System.out.println("ID inválido");
@@ -53,7 +53,7 @@ public class AbastecerService {
         return dao.buscarPorId(idAbast);
     }
 
-    // UPDATE (geral - recomendado)
+
     public boolean atualizar(abastecer abastecimento) {
 
         if (abastecimento == null || abastecimento.getIdAbast() <= 0) {
@@ -64,7 +64,7 @@ public class AbastecerService {
         return dao.atualizar(abastecimento);
     }
 
-    // DELETE
+
     public boolean remover(int idAbast) {
         if (idAbast <= 0) {
             System.out.println("ID inválido");

@@ -1,5 +1,7 @@
 package testeTecnico.bombacomb;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import testeTecnico.tipocomb.TipoComb;
 import testeTecnico.abastecer.Abastecer;
 import jakarta.persistence.*;
@@ -14,8 +16,9 @@ public class BombaComb {
 
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER) // garante que os dados sejam carregados
     @JoinColumn(name = "tipo_id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private TipoComb tipoComb;
 
     @OneToMany(mappedBy = "bomba")

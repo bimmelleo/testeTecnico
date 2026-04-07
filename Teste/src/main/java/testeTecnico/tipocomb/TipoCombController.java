@@ -3,33 +3,25 @@ package testeTecnico.tipocomb;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/tipos")
 public class TipoCombController {
 
-    private final TipoCombService service;
+    private final TipoCombRepository repo;
 
-    public TipoCombController(TipoCombService service) {
-        this.service = service;
+    public TipoCombController(TipoCombRepository repo) {
+        this.repo = repo;
     }
 
     @PostMapping
-    public TipoComb criar(@RequestBody TipoComb t) {
-        return service.criar(t);
+    public TipoComb criar(@RequestBody TipoComb tipo) {
+        return repo.save(tipo);
     }
 
     @GetMapping
     public List<TipoComb> listar() {
-        return service.listar();
-    }
-
-    @GetMapping("/{id}")
-    public TipoComb buscar(@PathVariable Long id) {
-        return service.buscar(id);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deletar(@PathVariable Long id) {
-        service.deletar(id);
+        return repo.findAll();
     }
 }

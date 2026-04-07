@@ -1,4 +1,4 @@
-package testeTecnico.Tecnico.Teste;
+package testeTecnico;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

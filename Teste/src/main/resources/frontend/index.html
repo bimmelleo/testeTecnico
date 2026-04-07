@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema Posto</title>
+</head>
+<body>
+
+<h1>Sistema de Posto</h1>
+
+<!-- MENU -->
+<button onclick="mostrar('tipo')">Adicionar Tipo de Combustível</button>
+<button onclick="mostrar('bomba')">Adicionar Bomba</button>
+<button onclick="mostrar('abastecimento')">Adicionar Abastecimento</button>
+
+<hr>
+
+<!-- FORM TIPO COMB -->
+<div id="tipo" style="display:none;">
+    <h2>Tipo de Combustível</h2>
+
+    <label>Nome:</label>
+    <input type="text" id="tipoNome"><br><br>
+
+    <label>Preço:</label>
+    <input type="number" id="tipoPreco" step="0.01"><br><br>
+
+    <button onclick="criarTipo()">Criar</button>
+</div>
+
+<!-- FORM BOMBA -->
+<div id="bomba" style="display:none;">
+    <h2>Bomba</h2>
+
+    <label>Nome:</label>
+    <input type="text" id="bombaNome"><br><br>
+
+    <label>ID do TipoComb:</label>
+    <input type="number" id="tipoId"><br><br>
+
+    <button onclick="criarBomba()">Criar</button>
+</div>
+
+<!-- FORM ABASTECIMENTO -->
+<div id="abastecimento" style="display:none;">
+    <h2>Abastecimento</h2>
+
+    <label>ID da Bomba:</label>
+    <input type="number" id="bombaId"><br><br>
+
+    <label>Quantidade:</label>
+    <input type="number" id="quant"><br><br>
+
+    <button onclick="criarAbastecimento()">Criar</button>
+</div>
+
+<hr>
+
+<h2>Listas</h2>
+
+<button onclick="listarTipos()">Listar Tipos de Combustível</button>
+<button onclick="listarBombas()">Listar Bombas</button>
+
+<h3>Tipos de Combustível</h3>
+<ul id="listaTipos"></ul>
+
+<h3>Bombas</h3>
+<ul id="listaBombas"></ul>
+
+<h2>Lista de Abastecimentos</h2>
+<button onclick="listar()">Atualizar</button>
+<ul id="lista"></ul>
+
+<script>
+    const API_TIPO = "http://localhost:8080/tipos";
+    const API_BOMBA = "http://localhost:8080/bombas";
+    const API_ABAST = "http://localhost:8080/abastecimentos";
+
+    // Mostrar formulário
+    function mostrar(tipo) {
+        document.getElementById("tipo").style.display = "none";
+        document.getElementById("bomba").style.display = "none";
+        document.getElementById("abastecimento").style.display = "none";
+
+        document.getElementById(tipo).style.display = "block";
+    }
+
+    // Criar TipoComb
+    async function criarTipo() {
+        const data = {
+            name: document.getElementById("tipoNome").value,
+            precoComb: parseFloat(document.getElementById("tipoPreco").value)
+        };
+
+        await fetch(API_TIPO, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(data)
+        });
+
+        alert("Tipo criado!");
+    }
+
+    // Criar Bomba
+    async function criarBomba() {
+        const data = {
+            name: document.getElementById("bombaNome").value,
+            tipoCombId: parseInt(document.getElementById("tipoId").value)
+        };
+
+        await fetch(API_BOMBA, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(data)
+        });
+
+        alert("Bomba criada!");
+    }
+
+    // Criar Abastecimento
+    async function criarAbastecimento() {
+        const bombaId = document.getElementById("bombaId").value;
+
+        const data = {
+            quant: parseFloat(document.getElementById("quant").value)
+        };
+
+        await fetch(`${API_ABAST}/bomba/${bombaId}`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(data)
+        });
+
+        alert("Abastecimento criado!");
+        listar();
+    }
+
+    // Listar abastecimentos
+    async function listar() {
+        const res = await fetch(API_ABAST);
+        const dados = await res.json();
+
+        const lista = document.getElementById("lista");
+        lista.innerHTML = "";
+
+        dados.forEach(a => {
+            const li = document.createElement("li");
+            li.innerText = `
+ID: ${a.id} | Quant: ${a.quant} | Valor: ${a.valor}
+Bomba: ${a.bomba.name} (${a.bomba.tipoComb.name})
+            `;
+            lista.appendChild(li);
+        });
+    }
+
+    // Listar Tipos de Combustível
+async function listarTipos() {
+    const res = await fetch(API_TIPO);
+    const dados = await res.json();
+
+    const lista = document.getElementById("listaTipos");
+    lista.innerHTML = "";
+
+    dados.forEach(t => {
+        const li = document.createElement("li");
+        li.innerText = `ID: ${t.id} | Nome: ${t.name} | Preço: ${t.precoComb}`;
+        lista.appendChild(li);
+    });
+}
+
+    // Listar Bombas
+async function listarBombas() {
+    const res = await fetch(API_BOMBA);
+    const dados = await res.json();
+
+    const lista = document.getElementById("listaBombas");
+    lista.innerHTML = "";
+
+    dados.forEach(b => {
+        const li = document.createElement("li");
+
+        li.innerText = `
+ID: ${b.id} | Nome: ${b.name}
+Tipo: ${b.tipoComb.name} (R$ ${b.tipoComb.precoComb})
+        `;
+
+        lista.appendChild(li);
+    });
+}
+</script>
+
+</body>
+</html>

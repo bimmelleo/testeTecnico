@@ -1,4 +1,4 @@
-package com.Tecnico.Teste.abastecer;
+package testeTecnico.abastecer;
 
 import org.springframework.web.bind.annotation.*;
 import java.util.List;

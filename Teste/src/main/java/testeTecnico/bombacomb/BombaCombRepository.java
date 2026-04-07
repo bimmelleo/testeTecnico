@@ -1,4 +1,4 @@
-package com.Tecnico.Teste.bombacomb;
+package testeTecnico.bombacomb;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

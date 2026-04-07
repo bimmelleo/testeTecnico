@@ -1,5 +1,6 @@
-package com.Tecnico.Teste.tipocomb;
+package testeTecnico.tipocomb;
 
+import testeTecnico.bombacomb.BombaComb;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class TipoComb {
     private double precoComb;
 
     @OneToMany(mappedBy = "tipoComb")
-    private List<com.Tecnico.Teste.bombacomb.BombaComb> bombas;
+    private List<BombaComb> bombas;
 
     public TipoComb() {}
 

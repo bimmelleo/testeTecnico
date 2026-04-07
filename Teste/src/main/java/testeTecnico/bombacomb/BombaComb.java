@@ -1,6 +1,7 @@
-package com.Tecnico.Teste.bombacomb;
+package testeTecnico.bombacomb;
 
-import com.Tecnico.Teste.tipocomb.TipoComb;
+import testeTecnico.tipocomb.TipoComb;
+import testeTecnico.abastecer.Abastecer;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class BombaComb {
     private TipoComb tipoComb;
 
     @OneToMany(mappedBy = "bomba")
-    private List<com.Tecnico.Teste.abastecer.Abastecer> abastecimentos;
+    private List<Abastecer> abastecimentos;
 
     public BombaComb() {}
 

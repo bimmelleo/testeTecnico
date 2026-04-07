@@ -1,6 +1,6 @@
-package com.Tecnico.Teste.abastecer;
+package testeTecnico.abastecer;
 
-import com.Tecnico.Teste.bombacomb.BombaComb;
+import testeTecnico.bombacomb.BombaComb;
 import jakarta.persistence.*;
 import java.util.Date;
 

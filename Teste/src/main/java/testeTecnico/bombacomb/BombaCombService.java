@@ -1,7 +1,7 @@
-package com.Tecnico.Teste.bombacomb;
+package testeTecnico.bombacomb;
 
-import com.Tecnico.Teste.tipocomb.TipoComb;
-import com.Tecnico.Teste.tipocomb.TipoCombRepository;
+import testeTecnico.tipocomb.TipoComb;
+import testeTecnico.tipocomb.TipoCombRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

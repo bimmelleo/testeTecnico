@@ -1,4 +1,4 @@
-package com.Tecnico.Teste.bombacomb;
+package testeTecnico.bombacomb;
 
 import org.springframework.web.bind.annotation.*;
 import java.util.List;

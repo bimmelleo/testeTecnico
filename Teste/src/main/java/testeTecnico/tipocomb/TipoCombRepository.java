@@ -1,4 +1,4 @@
-package com.Tecnico.Teste.tipocomb;
+package testeTecnico.tipocomb;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

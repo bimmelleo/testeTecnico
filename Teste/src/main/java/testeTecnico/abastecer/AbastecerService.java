@@ -1,7 +1,7 @@
-package com.Tecnico.Teste.abastecer;
+package testeTecnico.abastecer;
 
-import com.Tecnico.Teste.bombacomb.BombaComb;
-import com.Tecnico.Teste.bombacomb.BombaCombRepository;
+import testeTecnico.bombacomb.BombaComb;
+import testeTecnico.bombacomb.BombaCombRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

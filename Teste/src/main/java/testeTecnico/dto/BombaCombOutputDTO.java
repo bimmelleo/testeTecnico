@@ -1,5 +1,7 @@
 package testeTecnico.dto;
 
+import testeTecnico.dto.TipoCombDTO;
+
 public class BombaCombOutputDTO {
     private Long id;
     private String name;

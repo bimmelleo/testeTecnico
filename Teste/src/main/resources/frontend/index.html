@@ -3,190 +3,304 @@
 <head>
     <meta charset="UTF-8">
     <title>Sistema Posto</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <h1>Sistema de Posto</h1>
 
-<!-- MENU -->
-<button onclick="mostrar('tipo')">Adicionar Tipo de Combustível</button>
-<button onclick="mostrar('bomba')">Adicionar Bomba</button>
-<button onclick="mostrar('abastecimento')">Adicionar Abastecimento</button>
+<div class="container">
 
-<hr>
+    <!-- TIPO -->
+    <div>
+        <div class="card">
+            <h2>Tipo Combustível</h2>
 
-<!-- FORM TIPO COMB -->
-<div id="tipo" style="display:none;">
-    <h2>Tipo de Combustível</h2>
+            <input type="number" id="tipoIdEdit" placeholder="ID (update/delete)">
+            <input type="text" id="tipoNome" placeholder="Nome">
+            <input type="number" id="tipoPreco" step="0.01" placeholder="Preço">
 
-    <label>Nome:</label>
-    <input type="text" id="tipoNome"><br><br>
+            <div class="actions">
+                <button onclick="criarTipo()">Criar</button>
+                <button onclick="atualizarTipo()">Atualizar</button>
+                <button onclick="deletarTipo()">Deletar</button>
+            </div>
+        </div>
 
-    <label>Preço:</label>
-    <input type="number" id="tipoPreco" step="0.01"><br><br>
+        <div class="card">
+            <h3>Lista Tipos</h3>
+            <ul id="listaTipos"></ul>
+        </div>
+    </div>
 
-    <button onclick="criarTipo()">Criar</button>
+    <!-- BOMBA -->
+    <div>
+        <div class="card">
+            <h2>Bomba</h2>
+
+            <input type="number" id="bombaIdEdit" placeholder="ID (update/delete)">
+            <input type="text" id="bombaNome" placeholder="Nome">
+
+            <select id="tipoSelect"></select>
+
+            <div class="actions">
+                <button onclick="criarBomba()">Criar</button>
+                <button onclick="atualizarBomba()">Atualizar</button>
+                <button onclick="deletarBomba()">Deletar</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Lista Bombas</h3>
+            <ul id="listaBombas"></ul>
+        </div>
+    </div>
+
+    <!-- ABASTECIMENTO -->
+    <div>
+        <div class="card">
+            <h2>Abastecimento</h2>
+
+            <input type="number" id="abastIdEdit" placeholder="ID (update/delete)">
+            <select id="bombaSelect"></select>
+            <input type="number" id="quant" placeholder="Quantidade">
+
+            <div class="actions">
+                <button onclick="criarAbastecimento()">Criar</button>
+                <button onclick="atualizarAbastecimento()">Atualizar</button>
+                <button onclick="deletarAbastecimento()">Deletar</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Lista Abastecimentos</h3>
+            <ul id="listaAbastecimentos"></ul>
+        </div>
+    </div>
+
 </div>
-
-<!-- FORM BOMBA -->
-<div id="bomba" style="display:none;">
-    <h2>Bomba</h2>
-
-    <label>Nome:</label>
-    <input type="text" id="bombaNome"><br><br>
-
-    <label>ID do TipoComb:</label>
-    <input type="number" id="tipoId"><br><br>
-
-    <button onclick="criarBomba()">Criar</button>
-</div>
-
-<!-- FORM ABASTECIMENTO -->
-<div id="abastecimento" style="display:none;">
-    <h2>Abastecimento</h2>
-
-    <label>ID da Bomba:</label>
-    <input type="number" id="bombaId"><br><br>
-
-    <label>Quantidade:</label>
-    <input type="number" id="quant"><br><br>
-
-    <button onclick="criarAbastecimento()">Criar</button>
-</div>
-
-<hr>
-
-<h2>Listas</h2>
-
-<button onclick="listarTipos()">Listar Tipos de Combustível</button>
-<button onclick="listarBombas()">Listar Bombas</button>
-
-<h3>Tipos de Combustível</h3>
-<ul id="listaTipos"></ul>
-
-<h3>Bombas</h3>
-<ul id="listaBombas"></ul>
-
-<h2>Lista de Abastecimentos</h2>
-<button onclick="listar()">Atualizar</button>
-<ul id="lista"></ul>
 
 <script>
     const API_TIPO = "http://localhost:8080/tipos";
     const API_BOMBA = "http://localhost:8080/bombas";
     const API_ABAST = "http://localhost:8080/abastecimentos";
 
-    // Mostrar formulário
-    function mostrar(tipo) {
-        document.getElementById("tipo").style.display = "none";
-        document.getElementById("bomba").style.display = "none";
-        document.getElementById("abastecimento").style.display = "none";
-
-        document.getElementById(tipo).style.display = "block";
+    // ================= UTIL =================
+    function getNumber(value) {
+        return value ? parseFloat(value) : null;
     }
 
-    // Criar TipoComb
+    function getInt(value) {
+        return value ? parseInt(value) : null;
+    }
+
+    async function request(url, options) {
+        const res = await fetch(url, options);
+
+        if (!res.ok) {
+            const text = await res.text();
+            alert("Erro: " + text);
+            throw new Error(text);
+        }
+
+        return res;
+    }
+
+    // ================== TIPO ==================
     async function criarTipo() {
-        const data = {
-            name: document.getElementById("tipoNome").value,
-            precoComb: parseFloat(document.getElementById("tipoPreco").value)
-        };
+        const preco = getNumber(tipoPreco.value);
 
-        await fetch(API_TIPO, {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(data)
+        if (!tipoNome.value || preco === null) {
+            return alert("Preencha nome e preço");
+        }
+
+        await request(API_TIPO, {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({
+                name: tipoNome.value,
+                precoComb: preco
+            })
         });
 
-        alert("Tipo criado!");
+        listarTipos();
     }
 
-    // Criar Bomba
+    async function atualizarTipo() {
+        const id = getInt(tipoIdEdit.value);
+        const preco = getNumber(tipoPreco.value);
+
+        if (!id) return alert("Informe o ID");
+
+        await request(`${API_TIPO}/${id}`, {
+            method:"PUT",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({
+                name: tipoNome.value,
+                precoComb: preco
+            })
+        });
+
+        listarTipos();
+    }
+
+    async function deletarTipo() {
+        const id = getInt(tipoIdEdit.value);
+        if (!id) return alert("Informe o ID");
+
+        await request(`${API_TIPO}/${id}`, { method:"DELETE" });
+
+        listarTipos();
+    }
+
+    // ================== BOMBA ==================
     async function criarBomba() {
-        const data = {
-            name: document.getElementById("bombaNome").value,
-            tipoCombId: parseInt(document.getElementById("tipoId").value)
-        };
+        const tipoId = getInt(tipoSelect.value);
 
-        await fetch(API_BOMBA, {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(data)
+        if (!bombaNome.value || !tipoId) {
+            return alert("Preencha nome e tipo");
+        }
+
+        await request(API_BOMBA, {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({
+                name: bombaNome.value,
+                tipoCombId: tipoId
+            })
         });
 
-        alert("Bomba criada!");
+        listarBombas();
     }
 
-    // Criar Abastecimento
+    async function atualizarBomba() {
+        const id = getInt(bombaIdEdit.value);
+        const tipoId = getInt(tipoSelect.value);
+
+        if (!id) return alert("Informe o ID");
+
+        await request(`${API_BOMBA}/${id}`, {
+            method:"PUT",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({
+                name: bombaNome.value,
+                tipoCombId: tipoId
+            })
+        });
+
+        listarBombas();
+    }
+
+    async function deletarBomba() {
+        const id = getInt(bombaIdEdit.value);
+        if (!id) return alert("Informe o ID");
+
+        await request(`${API_BOMBA}/${id}`, { method:"DELETE" });
+
+        listarBombas();
+    }
+
+    // ================== ABAST ==================
     async function criarAbastecimento() {
-        const bombaId = document.getElementById("bombaId").value;
+        const bombaId = getInt(bombaSelect.value);
+        const quantidade = getNumber(quant.value);
 
-        const data = {
-            quant: parseFloat(document.getElementById("quant").value)
-        };
+        if (!bombaId || quantidade === null) {
+            return alert("Preencha bomba e quantidade");
+        }
 
-        await fetch(`${API_ABAST}/bomba/${bombaId}`, {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(data)
+        await request(`${API_ABAST}/bomba/${bombaId}`, {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({
+                quant: quantidade
+            })
         });
 
-        alert("Abastecimento criado!");
-        listar();
+        listarAbastecimentos();
     }
 
-    // Listar abastecimentos
-    async function listar() {
+    async function atualizarAbastecimento() {
+        const id = getInt(abastIdEdit.value);
+        const quantidade = getNumber(quant.value);
+
+        if (!id) return alert("Informe o ID");
+
+        await request(`${API_ABAST}/${id}`, {
+            method:"PUT",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({
+                quant: quantidade
+            })
+        });
+
+        listarAbastecimentos();
+    }
+
+    async function deletarAbastecimento() {
+        const id = getInt(abastIdEdit.value);
+        if (!id) return alert("Informe o ID");
+
+        await request(`${API_ABAST}/${id}`, { method:"DELETE" });
+
+        listarAbastecimentos();
+    }
+
+    // ================== LISTAS ==================
+    async function listarTipos() {
+        const res = await fetch(API_TIPO);
+        const dados = await res.json();
+
+        listaTipos.innerHTML = "";
+        tipoSelect.innerHTML = "";
+
+        dados.forEach(t => {
+            listaTipos.innerHTML += `<li>ID:${t.id} | ${t.name} - R$ ${t.precoComb}</li>`;
+            tipoSelect.innerHTML += `<option value="${t.id}">${t.name}</option>`;
+        });
+    }
+
+    async function listarBombas() {
+        const res = await fetch(API_BOMBA);
+        const dados = await res.json();
+
+        listaBombas.innerHTML = "";
+        bombaSelect.innerHTML = "";
+
+        dados.forEach(b => {
+            listaBombas.innerHTML += `
+                <li>
+                    ID:${b.id} | ${b.name}
+                    (${b.tipoComb?.name || "Sem tipo"})
+                </li>`;
+
+            bombaSelect.innerHTML += `<option value="${b.id}">${b.name}</option>`;
+        });
+    }
+
+    async function listarAbastecimentos() {
         const res = await fetch(API_ABAST);
         const dados = await res.json();
 
-        const lista = document.getElementById("lista");
-        lista.innerHTML = "";
+        listaAbastecimentos.innerHTML = "";
 
         dados.forEach(a => {
-            const li = document.createElement("li");
-            li.innerText = `
-ID: ${a.id} | Quant: ${a.quant} | Valor: ${a.valor}
-Bomba: ${a.bomba.name} (${a.bomba.tipoComb.name})
-            `;
-            lista.appendChild(li);
+            const data = a.date ? new Date(a.date).toLocaleString("pt-BR") : "Sem data";
+
+            listaAbastecimentos.innerHTML += `
+                <li>
+                    ID:${a.id} | Quant:${a.quant} | Valor:${a.valor} <br>
+                    Data: ${data} <br>
+                    Bomba: ${a.bomba?.name || "?"}
+                    (${a.bomba?.tipoComb?.name || "?"})
+                </li>`;
         });
     }
 
-    // Listar Tipos de Combustível
-async function listarTipos() {
-    const res = await fetch(API_TIPO);
-    const dados = await res.json();
-
-    const lista = document.getElementById("listaTipos");
-    lista.innerHTML = "";
-
-    dados.forEach(t => {
-        const li = document.createElement("li");
-        li.innerText = `ID: ${t.id} | Nome: ${t.name} | Preço: ${t.precoComb}`;
-        lista.appendChild(li);
-    });
-}
-
-    // Listar Bombas
-async function listarBombas() {
-    const res = await fetch(API_BOMBA);
-    const dados = await res.json();
-
-    const lista = document.getElementById("listaBombas");
-    lista.innerHTML = "";
-
-    dados.forEach(b => {
-        const li = document.createElement("li");
-
-        li.innerText = `
-ID: ${b.id} | Nome: ${b.name}
-Tipo: ${b.tipoComb.name} (R$ ${b.tipoComb.precoComb})
-        `;
-
-        lista.appendChild(li);
-    });
-}
+    // INIT
+    listarTipos();
+    listarBombas();
+    listarAbastecimentos();
 </script>
 
 </body>

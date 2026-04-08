@@ -1,12 +1,10 @@
 package testeTecnico.abastecer;
 
 import org.springframework.web.bind.annotation.*;
-import testeTecnico.dto.AbastecerInputDTO;
-import testeTecnico.dto.AbastecerOutputDTO;
-import testeTecnico.dto.BombaCombOutputDTO;
-import testeTecnico.dto.TipoCombDTO;
+import testeTecnico.dto.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -19,43 +17,52 @@ public class AbastecerController {
         this.service = service;
     }
 
+    // =========================
+    // CREATE
+    // =========================
     @PostMapping("/bomba/{bombaId}")
     public AbastecerOutputDTO criar(@PathVariable Long bombaId,
                                     @RequestBody AbastecerInputDTO dto) {
+
         Abastecer a = service.criar(bombaId, dto);
-
-        AbastecerOutputDTO output = new AbastecerOutputDTO();
-        output.setId(a.getId());
-        output.setQuant(a.getQuant());
-        output.setValor(a.getValor());
-        output.setDate(a.getDate());
-
-        // Mapeia Bomba
-        BombaCombOutputDTO bombaDTO = new BombaCombOutputDTO();
-        bombaDTO.setId(a.getBomba().getId());
-        bombaDTO.setName(a.getBomba().getName());
-
-        // Mapeia TipoComb
-        TipoCombDTO tipoDTO = new TipoCombDTO();
-        tipoDTO.setId(a.getBomba().getTipoComb().getId());
-        tipoDTO.setName(a.getBomba().getTipoComb().getName());
-        tipoDTO.setPrecoComb(a.getBomba().getTipoComb().getPrecoComb());
-
-        bombaDTO.setTipoComb(tipoDTO);
-        output.setBomba(bombaDTO);
-
-        return output;
+        return mapToOutputDTO(a);
     }
 
-    // Metodo de conversão Abastecer -> DTO
+    // =========================
+    // READ (CORRIGIDO)
+    // =========================
+    @GetMapping
+    public List<AbastecerOutputDTO> listar() {
+        return service.listar()
+                .stream()
+                .map(this::mapToOutputDTO)
+                .collect(Collectors.toList());
+    }
+
+    @PutMapping("/{id}")
+    public AbastecerOutputDTO atualizar(@PathVariable Long id,
+                                        @RequestBody AbastecerInputDTO dto) {
+
+        Abastecer a = service.atualizar(id, dto);
+        return mapToOutputDTO(a);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletar(@PathVariable Long id) {
+        service.deletar(id);
+    }
+
+    // =========================
+    // MAPPER
+    // =========================
     private AbastecerOutputDTO mapToOutputDTO(Abastecer a) {
         AbastecerOutputDTO dto = new AbastecerOutputDTO();
+
         dto.setId(a.getId());
         dto.setQuant(a.getQuant());
         dto.setValor(a.getValor());
         dto.setDate(a.getDate());
 
-        // Mapear bomba para DTO
         BombaCombOutputDTO bombaDTO = new BombaCombOutputDTO();
         bombaDTO.setId(a.getBomba().getId());
         bombaDTO.setName(a.getBomba().getName());
@@ -64,14 +71,10 @@ public class AbastecerController {
         tipoDTO.setId(a.getBomba().getTipoComb().getId());
         tipoDTO.setName(a.getBomba().getTipoComb().getName());
         tipoDTO.setPrecoComb(a.getBomba().getTipoComb().getPrecoComb());
+
         bombaDTO.setTipoComb(tipoDTO);
         dto.setBomba(bombaDTO);
 
         return dto;
-    }
-
-    @GetMapping
-    public List<Abastecer> listar() {
-        return service.listar();
     }
 }

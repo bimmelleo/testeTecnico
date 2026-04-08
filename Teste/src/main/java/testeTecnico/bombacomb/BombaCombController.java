@@ -1,9 +1,9 @@
 package testeTecnico.bombacomb;
 
 import org.springframework.web.bind.annotation.*;
+import testeTecnico.dto.*;
 import testeTecnico.tipocomb.TipoComb;
 import testeTecnico.tipocomb.TipoCombRepository;
-import testeTecnico.dto.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,29 +21,29 @@ public class BombaCombController {
         this.tipoRepo = tipoRepo;
     }
 
-    // POST
+    // =========================
+    // CREATE
+    // =========================
     @PostMapping
     public BombaCombOutputDTO criar(@RequestBody BombaCombInputDTO dto) {
+
         if (dto.getTipoCombId() == null) {
-            throw new RuntimeException("tipoCombId não pode ser null");
+            throw new RuntimeException("TipoComb é obrigatório");
         }
 
-        // Busca TipoComb completo
         TipoComb tipo = tipoRepo.findById(dto.getTipoCombId())
                 .orElseThrow(() -> new RuntimeException("TipoComb não encontrado"));
 
-        // Cria BombaComb
         BombaComb bomba = new BombaComb();
         bomba.setName(dto.getName());
         bomba.setTipoComb(tipo);
 
-        // Salva no banco
-        BombaComb salvo = bombaRepo.save(bomba);
-
-        return mapToOutputDTO(salvo);
+        return mapToOutputDTO(bombaRepo.save(bomba));
     }
 
-    // GET
+    // =========================
+    // READ
+    // =========================
     @GetMapping
     public List<BombaCombOutputDTO> listar() {
         return bombaRepo.findAll()
@@ -52,19 +52,51 @@ public class BombaCombController {
                 .collect(Collectors.toList());
     }
 
-    // Mapeia entidade para DTO
+    // =========================
+    // UPDATE
+    // =========================
+    @PutMapping("/{id}")
+    public BombaCombOutputDTO atualizar(@PathVariable Long id,
+                                        @RequestBody BombaCombInputDTO dto) {
+
+        BombaComb bomba = bombaRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Bomba não encontrada"));
+
+        bomba.setName(dto.getName());
+
+        if (dto.getTipoCombId() != null) {
+            TipoComb tipo = tipoRepo.findById(dto.getTipoCombId())
+                    .orElseThrow(() -> new RuntimeException("Tipo não encontrado"));
+            bomba.setTipoComb(tipo);
+        }
+
+        return mapToOutputDTO(bombaRepo.save(bomba));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletar(@PathVariable Long id) {
+        bombaRepo.deleteById(id);
+    }
+
+    // =========================
+    // MAPPER
+    // =========================
     private BombaCombOutputDTO mapToOutputDTO(BombaComb bomba) {
         BombaCombOutputDTO dto = new BombaCombOutputDTO();
         dto.setId(bomba.getId());
         dto.setName(bomba.getName());
 
-        TipoComb tipo = bomba.getTipoComb();
-        TipoCombDTO tipoDTO = new TipoCombDTO();
-        tipoDTO.setId(tipo.getId());
-        tipoDTO.setName(tipo.getName());
-        tipoDTO.setPrecoComb(tipo.getPrecoComb());
+        if (bomba.getTipoComb() != null) {
+            TipoComb tipo = bomba.getTipoComb();
 
-        dto.setTipoComb(tipoDTO);
+            TipoCombDTO tipoDTO = new TipoCombDTO();
+            tipoDTO.setId(tipo.getId());
+            tipoDTO.setName(tipo.getName());
+            tipoDTO.setPrecoComb(tipo.getPrecoComb());
+
+            dto.setTipoComb(tipoDTO);
+        }
+
         return dto;
     }
 }

@@ -45,6 +45,27 @@ public class AbastecerService {
         return repo.save(a);
     }
 
+    public Abastecer atualizar(Long id, AbastecerInputDTO dto) {
+
+        Abastecer a = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Abastecimento não encontrado"));
+
+        // Atualiza quantidade (se vier)
+        if (dto.getQuant() != null) {
+            a.setQuant(dto.getQuant());
+
+            // recalcula valor automaticamente
+            double preco = a.getBomba().getTipoComb().getPrecoComb();
+            a.setValor(dto.getQuant() * preco);
+        }
+
+        return repo.save(a);
+    }
+
+    public void deletar(Long id) {
+        repo.deleteById(id);
+    }
+
     public List<Abastecer> listar() {
         return repo.findAll();
     }

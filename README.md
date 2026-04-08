@@ -38,10 +38,6 @@ Antes de começar, você vai precisar ter instalado em sua máquina:
 
 Abaixo estão os principais endpoints da aplicação. Para testar manualmente (via Postman ou Insomnia), certifique-se de que o servidor está rodando em `http://localhost:8080`.
 
-## 🛣️ Endpoints Principais (API)
-
-Abaixo estão os principais endpoints da aplicação. Para testar manualmente (via Postman ou Insomnia), certifique-se de que o servidor está rodando em `http://localhost:8080`.
-
 | Entidade | Método | Endpoint | Descrição |
 | :--- | :--- | :--- | :--- |
 | **Tipo de Combustível** | `GET` | `/tipos` | Lista todos os tipos de combustível |

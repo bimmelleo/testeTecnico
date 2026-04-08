@@ -51,9 +51,9 @@ Abaixo estão os principais endpoints da aplicação. Para testar manualmente (v
 | **Abastecimento** | `GET` | `/abastecimentos` | Lista o histórico de abastecimentos |
 
 ### 📝 Exemplos de Payload
-
+```
 **Atualizar Tipo de Combustível (`PUT /tipos/1`):**
-```json
+json
 {
   "name": "Gasolina Comum",
   "precoComb": 5.45
@@ -70,6 +70,30 @@ Abaixo estão os principais endpoints da aplicação. Para testar manualmente (v
   "quant": 20.0
 }
 ```
+---
+
+## 📸 Demonstração do Sistema
+
+Aqui estão algumas capturas de tela da interface e do funcionamento da aplicação:
+
+### Interface Principal
+<img src="Teste/src/main/resources/interface.png" alt="Interface do Sistema" width="800">
+
+### Modelo de Componentes (DivModel)
+<img src="Teste/src/main/resources/divModel.png" alt="Modelo de Div" width="800">
+
+OBS: 
+- Tipo de Combustível deve ser o primeiro a ser desenvolvido, afinal, Bombas de Combustível dependem de um Tipo, além de que para efetuar um Abastecimento, é necessário uma Bomba.
+- O campo de ID é exclusivo para 'Atualizar' (Preencher ID, Nome e Preço) e 'Deletar' (Preencher apenas o ID).
+- Na criação dos objetos NÃO é necessário preencher o ID, apenas os outros campos de informações.
+- Se um Tipo de Combustível está ligado à uma Bomba de Combustível, ou, uma Bomba está ligada à um Abastecimento, é impossível DELETAR esses objetos.
+
+### Listagem de Dados
+<img src="Teste/src/main/resources/list.png" alt="Listagem" width="800">
+
+- Listagem automática dos objetos existentes no Banco de Dados.
+
+---
 
 ## 🔧 Instalação e Configuração
 

@@ -21,9 +21,7 @@ public class BombaCombController {
         this.tipoRepo = tipoRepo;
     }
 
-    // =========================
-    // CREATE
-    // =========================
+    //metodo de criação das bombas
     @PostMapping
     public BombaCombOutputDTO criar(@RequestBody BombaCombInputDTO dto) {
 
@@ -41,9 +39,7 @@ public class BombaCombController {
         return mapToOutputDTO(bombaRepo.save(bomba));
     }
 
-    // =========================
-    // READ
-    // =========================
+    //metodo para listagem das bombas
     @GetMapping
     public List<BombaCombOutputDTO> listar() {
         return bombaRepo.findAll()
@@ -52,9 +48,7 @@ public class BombaCombController {
                 .collect(Collectors.toList());
     }
 
-    // =========================
-    // UPDATE
-    // =========================
+    //metodo para atualização das bombas
     @PutMapping("/{id}")
     public BombaCombOutputDTO atualizar(@PathVariable Long id,
                                         @RequestBody BombaCombInputDTO dto) {
@@ -73,14 +67,14 @@ public class BombaCombController {
         return mapToOutputDTO(bombaRepo.save(bomba));
     }
 
+    //metodo para deletar bombas pelo ID
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
         bombaRepo.deleteById(id);
     }
 
-    // =========================
-    // MAPPER
-    // =========================
+    //metodo mapper para conversão de tipos dos objetos e evitar
+    //erros na relação entre as classes principais
     private BombaCombOutputDTO mapToOutputDTO(BombaComb bomba) {
         BombaCombOutputDTO dto = new BombaCombOutputDTO();
         dto.setId(bomba.getId());

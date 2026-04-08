@@ -19,19 +19,19 @@ public class TipoCombController {
         this.bombaRepo = bombaRepo;
     }
 
-    // 🔹 CREATE
+    //metodo para criação dos tipos
     @PostMapping
     public TipoComb criar(@RequestBody TipoComb tipo) {
         return repo.save(tipo);
     }
 
-    // 🔹 READ
+    //metodo para listagem dos tipos
     @GetMapping
     public List<TipoComb> listar() {
         return repo.findAll();
     }
 
-    // 🔹 UPDATE
+    //metodo para atualização dos tipos de combustível pelo ID
     @PutMapping("/{id}")
     public TipoComb atualizar(@PathVariable Long id, @RequestBody TipoComb novo) {
 
@@ -44,7 +44,8 @@ public class TipoCombController {
         return repo.save(tipo);
     }
 
-    // 🔹 DELETE (com validação)
+    //metodo para deletar tipos pelo ID com uma validação se existe alguma relação
+    //de tipo com bombas
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
 

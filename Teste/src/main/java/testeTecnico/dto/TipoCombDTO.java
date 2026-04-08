@@ -1,5 +1,7 @@
 package testeTecnico.dto;
 
+//necessario para que os outros Input e Output consigam transferir os dados de tipo
+//para as camadas de service
 public class TipoCombDTO {
     private Long id;
     private String name;

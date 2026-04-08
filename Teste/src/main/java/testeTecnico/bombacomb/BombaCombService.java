@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+//basicamente a implementação dos métodos principais do CRUD na classe Service
 @Service
 public class BombaCombService {
 

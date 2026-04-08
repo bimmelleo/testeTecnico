@@ -1,5 +1,7 @@
 package testeTecnico.dto;
 
+//recebe dados externos (usuário) para transferir para as camadas de service
+//e controller conseguirem manipular
 public class AbastecerInputDTO {
 
     private Double quant;

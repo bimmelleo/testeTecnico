@@ -17,9 +17,7 @@ public class AbastecerController {
         this.service = service;
     }
 
-    // =========================
-    // CREATE
-    // =========================
+    //metodo de criação dos abastecimentos
     @PostMapping("/bomba/{bombaId}")
     public AbastecerOutputDTO criar(@PathVariable Long bombaId,
                                     @RequestBody AbastecerInputDTO dto) {
@@ -28,9 +26,7 @@ public class AbastecerController {
         return mapToOutputDTO(a);
     }
 
-    // =========================
-    // READ (CORRIGIDO)
-    // =========================
+    //metodo para listagem dos abastecimentos
     @GetMapping
     public List<AbastecerOutputDTO> listar() {
         return service.listar()
@@ -39,6 +35,7 @@ public class AbastecerController {
                 .collect(Collectors.toList());
     }
 
+    //metodo para atualizaçao dos abastecimentos
     @PutMapping("/{id}")
     public AbastecerOutputDTO atualizar(@PathVariable Long id,
                                         @RequestBody AbastecerInputDTO dto) {
@@ -47,14 +44,14 @@ public class AbastecerController {
         return mapToOutputDTO(a);
     }
 
+    //metodo deletar os abastecimentos
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
         service.deletar(id);
     }
 
-    // =========================
-    // MAPPER
-    // =========================
+    //metodo mapper para conversão de tipos dos objetos e evitar
+    //erros na relação entre as classes principais
     private AbastecerOutputDTO mapToOutputDTO(Abastecer a) {
         AbastecerOutputDTO dto = new AbastecerOutputDTO();
 

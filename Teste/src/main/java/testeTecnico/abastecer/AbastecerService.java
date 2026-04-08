@@ -8,6 +8,7 @@ import testeTecnico.dto.AbastecerInputDTO;
 import java.util.Date;
 import java.util.List;
 
+//basicamente a implementação dos métodos principais do CRUD na classe Service
 @Service
 public class AbastecerService {
 
@@ -36,7 +37,6 @@ public class AbastecerService {
 
         double valor = dto.getQuant() * preco;
 
-        // arredondamento (2 casas decimais)
         valor = Math.round(valor * 100.0) / 100.0;
 
         a.setValor(valor);
@@ -50,11 +50,9 @@ public class AbastecerService {
         Abastecer a = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Abastecimento não encontrado"));
 
-        // Atualiza quantidade (se vier)
         if (dto.getQuant() != null) {
             a.setQuant(dto.getQuant());
 
-            // recalcula valor automaticamente
             double preco = a.getBomba().getTipoComb().getPrecoComb();
             a.setValor(dto.getQuant() * preco);
         }

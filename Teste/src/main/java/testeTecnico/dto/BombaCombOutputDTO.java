@@ -2,6 +2,8 @@ package testeTecnico.dto;
 
 import testeTecnico.dto.TipoCombDTO;
 
+//define quais dados e como eles devem ser retornados para o Usuário
+//após serem lapidados nas camadas de service e controller
 public class BombaCombOutputDTO {
     private Long id;
     private String name;

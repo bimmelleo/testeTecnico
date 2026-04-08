@@ -3,6 +3,8 @@ package testeTecnico.dto;
 import testeTecnico.dto.BombaCombOutputDTO;
 import java.util.Date;
 
+//define quais dados e como eles devem ser retornados para o Usuário
+//após serem lapidados nas camadas de service e controller
 public class AbastecerOutputDTO {
     private Long id;
     private double valor;

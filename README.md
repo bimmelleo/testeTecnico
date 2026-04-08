@@ -113,8 +113,11 @@ OBS:
      Muito importante possuir um Banco de Dados que exista para conectar ele em "application.properties":
    
 "spring.application.name=Teste"
+
 "spring.datasource.url=jdbc:postgresql://localhost:5432/SEU_BANCO"
+
 "spring.datasource.username=SEU_USER"
+
 "spring.datasource.password=SUA_SENHA"
 
 3. **Sempre executar a classe "TesteApplication.java"**

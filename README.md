@@ -38,14 +38,30 @@ Antes de começar, você vai precisar ter instalado em sua máquina:
 
 Abaixo estão os principais endpoints da aplicação. Para testar manualmente (via Postman ou Insomnia), certifique-se de que o servidor está rodando em `http://localhost:8080`.
 
+## 🛣️ Endpoints Principais (API)
+
+Abaixo estão os principais endpoints da aplicação. Para testar manualmente (via Postman ou Insomnia), certifique-se de que o servidor está rodando em `http://localhost:8080`.
+
 | Entidade | Método | Endpoint | Descrição |
 | :--- | :--- | :--- | :--- |
+| **Tipo de Combustível** | `GET` | `/tipos` | Lista todos os tipos de combustível |
 | **Tipo de Combustível** | `POST` | `/tipos` | Cadastra um novo tipo |
-| **Bomba de Combustível** | `POST` | `/bombas` | Cadastra uma nova bomba física |
+| **Tipo de Combustível** | `PUT` | `/tipos/{id}` | Atualiza um tipo existente pelo ID |
+| **Tipo de Combustível** | `DELETE` | `/tipos/{id}` | Remove um tipo pelo ID |
+| **Bomba** | `GET` | `/bombas` | Lista todas as bombas |
+| **Bomba** | `POST` | `/bombas` | Cadastra uma nova bomba física |
+| **Bomba** | `DELETE` | `/bombas/{id}` | Remove uma bomba pelo ID |
 | **Abastecimento** | `POST` | `/abastecimentos/bomba/{id}` | Registra abastecimento vinculado ao ID da bomba |
-| **Listagem Geral** | `GET` | `/{entidade}` | Use `/tipos`, `/bombas` ou `/abastecimentos` |
+| **Abastecimento** | `GET` | `/abastecimentos` | Lista o histórico de abastecimentos |
 
-### 📝 Exemplos de Payload (JSON)
+### 📝 Exemplos de Payload
+
+**Atualizar Tipo de Combustível (`PUT /tipos/1`):**
+```json
+{
+  "name": "Gasolina Comum",
+  "precoComb": 5.45
+}
 
 **Cadastrar Tipo de Combustível (`POST /tipos`):**
 ```json

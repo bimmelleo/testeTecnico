@@ -60,7 +60,6 @@ Abaixo estão os principais endpoints da aplicação. Para testar manualmente (v
 }
 
 **Cadastrar Tipo de Combustível (`POST /tipos`):**
-```json
 {
   "name": "Gasolina Aditivada",
   "precoComb": 5.89
@@ -68,8 +67,9 @@ Abaixo estão os principais endpoints da aplicação. Para testar manualmente (v
 
 **Registrar um novo Abastecimento(POST /abastecimentos/bomba/1):**
 {
-  "quant": 20.0,
+  "quant": 20.0
 }
+```
 
 ## 🔧 Instalação e Configuração
 
